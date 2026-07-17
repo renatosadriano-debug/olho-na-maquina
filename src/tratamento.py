@@ -1,41 +1,30 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
+from src.saidas import salvar_figura
 
-# Colunas com outliers (definem a estratégia de imputação por mediana)
 COLUNAS_COM_OUTLIERS = ['velocidade_rotacao_rpm', 'torque_nm']
 
 
 def verificar_duplicados(df):
-    """
-    Fase 2 - Verifica duplicados pela definição de negócio:
-    mesma linha em todas as colunas, ignorando apenas o 'udi' (índice).
-    """
+    """Fase 2 - Verifica duplicados ignorando apenas o 'udi' (índice)."""
     qtd = df.duplicated(subset=df.columns.drop('udi')).sum()
     print("Duplicados (todas as colunas, menos udi):", qtd)
-    # Resultado 0: não há equipamentos duplicados, nada é removido.
     return df
 
 
 def imputar_nulos(df):
-    """
-    Fase 2 - Imputação dos valores ausentes.
-    Média nas colunas simétricas (sem outliers) e mediana nas colunas com outliers.
-    """
-    # Média nas colunas simétricas
+    """Fase 2 - Imputa nulos: média nas simétricas, mediana nas que têm outliers."""
     df['temperatura_ar_k'] = df['temperatura_ar_k'].fillna(df['temperatura_ar_k'].mean())
     df['temperatura_processo_k'] = df['temperatura_processo_k'].fillna(df['temperatura_processo_k'].mean())
-
-    # Mediana nas colunas com outliers (mais robusta a valores extremos)
     df['velocidade_rotacao_rpm'] = df['velocidade_rotacao_rpm'].fillna(df['velocidade_rotacao_rpm'].median())
     df['torque_nm'] = df['torque_nm'].fillna(df['torque_nm'].median())
-
     print("Valores ausentes após a imputação:")
     print(df.isnull().sum())
     return df
 
 
 def boxplots_outliers(df):
-    """Fase 2 - Boxplots para identificar outliers nas variáveis com valores extremos."""
+    """Fase 2 - Boxplots para identificar outliers."""
     plt.figure(figsize=(12, 8))
     for i, coluna in enumerate(COLUNAS_COM_OUTLIERS):
         Q1 = df[coluna].quantile(0.25)
@@ -50,4 +39,4 @@ def boxplots_outliers(df):
         plt.title(f'{coluna} - {qtd_outliers} outliers')
 
     plt.subplots_adjust(hspace=0.4)
-    plt.show()
+    salvar_figura('04_boxplots_outliers.png')

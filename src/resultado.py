@@ -2,12 +2,11 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 from sklearn.metrics import accuracy_score
+from src.saidas import salvar_figura
 
 
 def veredito_final(melhor_knn, melhor_arvore, X_test_scaled, X_test, y_test):
-    """
-    Fase 7 - Calcula a acurácia final no teste dos melhores modelos e define o veredito.
-    """
+    """Fase 7 - Acurácia final no teste dos melhores modelos e veredito (KNN vs Árvore)."""
     acc_knn = accuracy_score(y_test, melhor_knn.predict(X_test_scaled))
     acc_arvore = accuracy_score(y_test, melhor_arvore.predict(X_test))
 
@@ -23,18 +22,18 @@ def veredito_final(melhor_knn, melhor_arvore, X_test_scaled, X_test, y_test):
 
 
 def grafico_comparativo(acc_knn, acc_arvore):
-    """Fase 7 - Gráfico de barras comparando a acurácia dos dois modelos no teste."""
+    """Fase 7 - Barras comparando a acurácia de KNN e Árvore no teste."""
     modelos = ['KNN (K=3)', 'Árvore (depth=5)']
     acuracias = [acc_knn, acc_arvore]
 
     plt.figure(figsize=(6, 4))
     barras = plt.bar(modelos, acuracias, color=['skyblue', 'salmon'], width=0.6)
     plt.ylim(0, 1.15)
-    plt.title('Acurácia no Teste', pad=8)
+    plt.title('Acurácia no Teste - KNN vs Árvore', pad=8)
     for barra in barras:
         plt.text(barra.get_x() + barra.get_width() / 2, barra.get_height() + 0.02,
                  f'{barra.get_height():.3f}', ha='center', va='bottom', fontweight='bold')
-    plt.show()
+    salvar_figura('05_comparacao_knn_arvore.png')
 
 
 def grafico_importancia(melhor_arvore, X):
@@ -48,6 +47,6 @@ def grafico_importancia(melhor_arvore, X):
     plt.ylabel('Variáveis')
     for container in ax.containers:
         ax.bar_label(container, fmt='%.2f%%', label_type='edge', fontweight='bold')
-    plt.show()
+    salvar_figura('06_importancia_arvore.png')
 
     print(importancias.round(2))
