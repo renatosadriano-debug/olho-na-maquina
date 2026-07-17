@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import seaborn as sns
+from src.saidas import salvar_figura
 
 # Colunas de sensores (variáveis explicativas contínuas)
 COLUNAS_SENSORES = ['temperatura_ar_k', 'temperatura_processo_k',
@@ -19,28 +20,28 @@ def grafico_alvo(df):
     """Fase 1 - Gráfico de barras do desbalanceamento da variável alvo."""
     plt.figure(figsize=(6, 4))
     ax = sns.countplot(data=df, x='falha_maquina')
-    for container in ax.containers:      # escreve a contagem no topo de cada barra
+    for container in ax.containers:
         ax.bar_label(container)
     plt.title('Distribuição da variável alvo (Falha da máquina)')
     plt.xlabel('Falha (0 = normal, 1 = falha)')
     plt.ylabel('Quantidade de registros')
-    plt.show()
+    salvar_figura('01_distribuicao_alvo.png')
 
 
 def grafico_histogramas(df):
     """Fase 1 - Histogramas de distribuição das variáveis preditoras."""
     df[COLUNAS_SENSORES].hist(figsize=(12, 8))
     plt.tight_layout()
-    plt.show()
+    salvar_figura('02_histogramas.png')
 
 
 def grafico_heatmap(df):
     """Fase 1 - Mapa de calor com a correlação de Pearson."""
     plt.figure(figsize=(12, 8))
-    matriz_corr = df.corr(numeric_only=True)   # correlação de Pearson entre colunas numéricas
+    matriz_corr = df.corr(numeric_only=True)
     sns.heatmap(matriz_corr, annot=True, cmap='coolwarm', fmt='.2f')
     plt.title('Mapa de Calor - Correlação de Pearson')
-    plt.show()
+    salvar_figura('03_heatmap_correlacao.png')
 
 
 def analise_exploratoria(df):
