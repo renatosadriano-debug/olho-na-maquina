@@ -1,0 +1,10 @@
+=== RESUMO DOS RESULTADOS - Olho na Máquina ===
+
+Acurácia no teste por modelo:
+  LightGBM: 0.977
+  XGBoost: 0.975
+  Random Forest: 0.973
+  Árvore (depth=5): 0.948
+  KNN (K=3): 0.921
+
+Melhor modelo geral: LightGBM (0.977)
