@@ -187,6 +187,13 @@ boxplots, comparação dos modelos, importância das variáveis e o comparativo 
 - **Validação cruzada (cross-validation)** para uma estimativa mais robusta do desempenho.
 - **Evoluir a estimativa de causas** treinando modelos dedicados por tipo de falha.
 
+## 🎥 Vídeo de apresentação
+
+Link do Video Explicativo da Versão 2.0
+
+Pasta - https://drive.google.com/drive/folders/1rxMX2FR0k2Wq9hxbcpx2xQOvgAjE1rpB?usp=drive_link
+Video - https://drive.google.com/file/d/1rozGUn0yRhUHkBG-fx2l6p6swrrMtgAx/view?usp=sharing
+
 ## 👤 Autor
 
 Renato Adriano Turazi da Silva
